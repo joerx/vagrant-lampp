@@ -3,7 +3,15 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
-SITE_NAME = ENV["V_SITE_NAME"] || "my_site"
+
+# Read site name from ENV or use the dir name of the parent directory (assumed to be the project name)
+SITE_NAME = ENV["V_SITE_NAME"] || File.basename(File.expand_path("../..",__FILE__))
+
+# Apt mirror to use by the box, defaults to 'archive.ubuntu.com', change to a closer one if needed
+APT_MIRROR = ENV["V_APT_MIRROR"] || "archive.ubuntu.com"
+
+puts "SITE_NAME: #{SITE_NAME}"
+puts "APT_MIRROR: #{APT_MIRROR}"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
@@ -82,7 +90,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.facter         = {
       :fqdn => "localdomain", 
       :site_name => SITE_NAME,
-      :apt_mirror => "vn.archive.ubuntu.com"
+      :apt_mirror => APT_MIRROR
     }
   end
 
