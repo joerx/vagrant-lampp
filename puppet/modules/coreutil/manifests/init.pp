@@ -1,0 +1,3 @@
+class coreutil {
+  # Placeholder class
+}
