@@ -74,3 +74,8 @@ Based on this, the following configuration will be applied:
  * Folder '/var/www/my_project' will be used as document root for Apache2
  * A MySQL database 'my_project' will be created (user 'my_project', pass 'my_project')
 
+Limitations
+-----------
+
+ * Cannot push to Git from inside the box as public SSL key is missing. Branch, commit, etc. works though
+
