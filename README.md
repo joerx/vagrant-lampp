@@ -13,7 +13,8 @@ The box is using Ubuntu 12.04 Server (Precise) 64bit as base box.
 Preconditions
 -------------
  * This box is using NFS to mount some folders for performance reasons. Hence the host system must have nfsd installed.
-   For the same reason, this box does not work on Windows (you're not doing this anyway, no?). More info on NFS shared folder under http://docs.vagrantup.com/v2/synced-folders/nfs.html
+   For the same reason, this box does not work on Windows (and frankly, I care little). More info on NFS shared folder 
+   under http://docs.vagrantup.com/v2/synced-folders/nfs.html
 
 Usage
 -----
@@ -51,10 +52,11 @@ Project Assumptions
 -------------------
 
 The box will set up the document root for the web servers default vhost and a MySQL database for the project 
-automatically. It will do this based on a variable called SITE_NAME. The SITE_NAME will be the base name of the 
+automatically. It will do this based on an internal variable SITE_NAME. The SITE_NAME will be the base name of the 
 parent of the folder the Vagrant file is located in. This can be overridden using the environment variable V_SITE_NAME.
 
-Given the directory structure below, SITE_NAME would be set to 'my_project'. 
+Assuming you add this to a project called 'my_project', and given the directory structure below, SITE_NAME would be set 
+to 'my_project'. 
 
 ````
 .
@@ -62,7 +64,7 @@ Given the directory structure below, SITE_NAME would be set to 'my_project'.
 `-- my_project
     |-- vagrant
     |   |-- puppet
-    |   |-- READE.MD
+    |   |-- README.md
     |   `-- Vagrantfile
     `-- ...
 ````
