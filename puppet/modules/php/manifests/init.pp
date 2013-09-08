@@ -25,9 +25,19 @@ class php ($mysql = "false") {
     ensure  => latest,
   }
 
-  package { "libapache2-mod-php5": ensure => latest, notify => Service["apache2"] }
+  package { "libapache2-mod-php5": 
+  	ensure => latest, 
+  	notify => Service["apache2"] 
+  }
+
+  package { "php5-curl":
+  	ensure => latest,
+  	notify => Service["apache2"]
+	}
 
   if "${mysql}" == "true" {
     class {"php::mysql":}
   }
+
+  class { "php::pear": }
 }

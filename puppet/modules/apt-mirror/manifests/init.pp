@@ -45,7 +45,7 @@ class apt-mirror ($apt_mirror = "archive.ubuntu.com") {
     path    => "/etc/apt/sources.list",
     ensure  => "present",
     content => template("apt-mirror/sources.list.erb"),
-    before  => Exec["apt-update"],
+    notify  => Exec["apt-update"],
     owner   => "root",
     group   => "root"
   }
