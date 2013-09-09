@@ -12,9 +12,16 @@ The box is using Ubuntu 12.04 Server (Precise) 64bit as base box.
 
 Preconditions
 -------------
- * This box is using NFS to mount some folders for performance reasons. Hence the host system must have nfsd installed.
-   For the same reason, this box does not work on Windows (and frankly, I care little). More info on NFS shared folder 
-   under http://docs.vagrantup.com/v2/synced-folders/nfs.html
+
+ * Vagrant 1.2.7, version 1.3.1. does not work due to a bug with NFS (Can't find the ticket anymore...)
+ * VirtualBox
+ * NFS Server. On Ubuntu Raring you need <tt>nfs-common</tt> and <tt>nfs-kernel-server</tt>. 
+
+### NFS 
+
+ * This box is using NFS to mount some folders for performance reasons. Hence the host system must have nfsd installed.    
+ * For the same reason, this box does not work on Windows (and frankly, I care little). 
+ * More info on NFS shared folder under http://docs.vagrantup.com/v2/synced-folders/nfs.html
 
 Usage
 -----
