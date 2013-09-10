@@ -52,6 +52,7 @@ class apt-mirror ($apt_mirror = "archive.ubuntu.com") {
 
   exec { "apt-update":
     command => "/usr/bin/apt-get update",
-    returns => [0, 100]
+    returns => [0, 100],
+    refreshonly => true
   }
 }
