@@ -62,14 +62,14 @@ class site ($site_name = "my_site", $docroot = "") {
   mysql::db { $site_name: 
     user     => $site_name,
     password => $site_name,
-    host     => "localhost",
+    host     => "%",
     grant    => ["all"]
   }
 
   mysql::db { "${site_name}_test": 
     user     => $site_name,
     password => $site_name,
-    host     => "localhost",
+    host     => "%",
     grant    => ["all"]
   }
 }
