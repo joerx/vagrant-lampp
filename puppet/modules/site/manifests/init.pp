@@ -59,25 +59,47 @@ class site ($site_name = "my_site", $docroot = "") {
     unless  => "test -h /etc/apache2/sites-enabled/${site_name}"
   }
 
-  mysql::db { $site_name: 
-    user     => $site_name,
-    password => $site_name,
-    host     => "localhost",
-    grant    => ["all"]
+  database { 'default-db':
+    name => $site_name,
+    ensure => present,
   }
 
-  mysql_user { 'ssle@%':
-    password_hash => mysql_password('ssle')
+  database { 'test-db': 
+    name => "${site_name}_test",
+    ensure => present,
   }
 
-  database_grant { 'ssle@%/ssle':
+
+  # mysql::db { $site_name: 
+  #   user     => $site_name,
+  #   password => $site_name,
+  #   host     => "localhost",
+  #   grant    => ["all"]
+  # }
+
+  database_user { 'default-dbuser@localhost':
+    name => "${site_name}@localhost",
+    password_hash => mysql_password($site_name)
+  }
+
+  database_user { 'default-dbuser@%':
+    name => "${site_name}@%",
+    password_hash => mysql_password($site_name)
+  }
+
+  database_grant { '${site-name}@localhost/${site-name}':
     privileges => ['all']
   }
 
-  mysql::db { "${site_name}_test": 
-    user     => $site_name,
-    password => $site_name,
-    host     => "localhost",
-    grant    => ["all"]
+  database_grant { '${site-name}@%/${site-name}':
+    privileges => ['all']
+  }
+
+  database_grant { '${site-name}@localhost/${site-name}_test':
+    privileges => ['all']
+  }
+
+  database_grant { '${site-name}@%/${site-name}_test':
+    privileges => ['all']
   }
 }
