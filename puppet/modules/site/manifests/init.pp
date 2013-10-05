@@ -60,46 +60,43 @@ class site ($site_name = "my_site", $docroot = "") {
   }
 
   database { 'default-db':
+    require => Class['mysql::server'],
     name => $site_name,
     ensure => present,
   }
 
-  database { 'test-db': 
+  database { 'test-db':
+    require => Class['mysql::server'], 
     name => "${site_name}_test",
     ensure => present,
   }
 
-
-  # mysql::db { $site_name: 
-  #   user     => $site_name,
-  #   password => $site_name,
-  #   host     => "localhost",
-  #   grant    => ["all"]
-  # }
-
   database_user { 'default-dbuser@localhost':
+    require => Class['mysql::server'],
     name => "${site_name}@localhost",
     password_hash => mysql_password($site_name)
   }
 
   database_user { 'default-dbuser@%':
+    require => Class['mysql::server'],
     name => "${site_name}@%",
     password_hash => mysql_password($site_name)
   }
 
-  database_grant { '${site-name}@localhost/${site-name}':
+  database_grant { "${site_name}@localhost/${site_name}":
+    require => Class['mysql::server'],
     privileges => ['all']
   }
 
-  database_grant { '${site-name}@%/${site-name}':
+  database_grant { "${site_name}@%/${site_name}":
     privileges => ['all']
   }
 
-  database_grant { '${site-name}@localhost/${site-name}_test':
+  database_grant { "${site_name}@localhost/${site_name}_test":
     privileges => ['all']
   }
 
-  database_grant { '${site-name}@%/${site-name}_test':
+  database_grant { "${site_name}@%/${site_name}_test":
     privileges => ['all']
   }
 }
