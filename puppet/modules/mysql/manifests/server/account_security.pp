@@ -1,7 +1,5 @@
-# Some installations have some default users which are not required.
-# We remove them here. You can subclass this class to overwrite this behavior.
 class mysql::server::account_security {
-  database_user {
+  mysql_user {
     [ "root@${::fqdn}",
       'root@127.0.0.1',
       'root@::1',
@@ -9,16 +7,16 @@ class mysql::server::account_security {
       '@localhost',
       '@%']:
     ensure  => 'absent',
-    require => Class['mysql::config'],
+    require => Anchor['mysql::server::end'],
   }
   if ($::fqdn != $::hostname) {
-    database_user { ["root@${::hostname}", "@${::hostname}"]:
+    mysql_user { ["root@${::hostname}", "@${::hostname}"]:
       ensure  => 'absent',
-      require => Class['mysql::config'],
+      require => Anchor['mysql::server::end'],
     }
   }
-  database { 'test':
+  mysql_database { 'test':
     ensure  => 'absent',
-    require => Class['mysql::config'],
+    require => Anchor['mysql::server::end'],
   }
 }

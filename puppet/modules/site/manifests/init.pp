@@ -59,44 +59,59 @@ class site ($site_name = "my_site", $docroot = "") {
     unless  => "test -h /etc/apache2/sites-enabled/${site_name}"
   }
 
-  database { 'default-db':
+  mysql_database { 'default-db':
     require => Class['mysql::server'],
     name => $site_name,
     ensure => present,
   }
 
-  database { 'test-db':
+  mysql_database { 'test-db':
     require => Class['mysql::server'], 
     name => "${site_name}_test",
     ensure => present,
   }
 
-  database_user { 'default-dbuser@localhost':
+  mysql_user { 'default-dbuser@localhost':
     require => Class['mysql::server'],
     name => "${site_name}@localhost",
     password_hash => mysql_password($site_name)
   }
 
-  database_user { 'default-dbuser@%':
+  mysql_user { 'default-dbuser@%':
     require => Class['mysql::server'],
     name => "${site_name}@%",
     password_hash => mysql_password($site_name)
   }
 
-  database_grant { "${site_name}@localhost/${site_name}":
+  mysql_grant { "${site_name}@localhost/${site_name}.*":
     require => Class['mysql::server'],
-    privileges => ['all']
+    user       => "{site_name}@localhost",
+    table      => "{site_name}.*",
+    privileges => ["ALL"],
+    ensure     => "present"
   }
 
-  database_grant { "${site_name}@%/${site_name}":
-    privileges => ['all']
+  mysql_grant { "${site_name}@%/${site_name}.*":
+    require => Class['mysql::server'],
+    user       => "{site_name}@%",
+    table      => "{site_name}.*",
+    privileges => ["ALL"],
+    ensure     => "present" 
   }
 
-  database_grant { "${site_name}@localhost/${site_name}_test":
-    privileges => ['all']
+  mysql_grant { "${site_name}@localhost/${site_name}_test.*":
+    require => Class['mysql::server'],
+    user       => "{site_name}@localhost",
+    table      => "{site_name}_test.*",
+    privileges => ["ALL"],
+    ensure     => "present"
   }
 
-  database_grant { "${site_name}@%/${site_name}_test":
-    privileges => ['all']
+  mysql_grant { "${site_name}@%/${site_name}_test.*":
+    require => Class['mysql::server'],
+    user       => "{site_name}@%",
+    table      => "{site_name}_test.*",
+    privileges => ["ALL"],
+    ensure     => "present"
   }
 }

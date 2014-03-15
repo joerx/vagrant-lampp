@@ -16,8 +16,12 @@ puts "APT_MIRROR: #{APT_MIRROR}"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Ubuntu 12.04 (precise) server, loaded from Canonical
-  config.vm.box = "precise64-cloudimg"
-  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.box = "precise64"
+  config.vm.box_url =  "http://files.vagrantup.com/precise64.box"
+
+  # config.vm.box = "precise64-cloudimg"
+  # config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+
 
   # Forward httpd and mysql
   config.vm.network :forwarded_port, guest: 80, host: 8080
