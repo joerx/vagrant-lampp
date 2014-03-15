@@ -31,7 +31,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.network :private_network, ip: "192.168.33.10"
 
   # If the vagrant project was unpacked inside the web project root, the parent folder contains the site root
-  config.vm.synced_folder "../", "/var/www/#{SITE_NAME}"
+  config.vm.synced_folder "../", "/var/www/#{SITE_NAME}", 
+    owner: "www-data", 
+    group: "www-data", 
+    extra: "umask=0002,dmask=0002,fmask=0002"
 
   # Customize box name to avoid 20 different "vagrant_..." VM's inside VirtualBox GUI
   config.vm.provider :virtualbox do |vb|
