@@ -34,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "../", "/var/www/#{SITE_NAME}", 
     owner: "www-data", 
     group: "www-data", 
-    extra: "umask=0002,dmask=0002,fmask=0002"
+    mount_options: ["umask=0002","dmask=0002","fmask=0002"]
 
   # Customize box name to avoid 20 different "vagrant_..." VM's inside VirtualBox GUI
   config.vm.provider :virtualbox do |vb|
