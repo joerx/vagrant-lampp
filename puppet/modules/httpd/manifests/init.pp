@@ -27,10 +27,11 @@ class httpd {
     require => Package["apache2"]
   }
 
-  # We need to explicitly add www-user to vagrant to allow write access to application
-  user { "www-data":
-    ensure => present,
-    groups => vagrant,
-    require => Package["apache2"]
+  file { "enable_mod_rewrite":
+    path => "/etc/apache2/mods-enabled/rewrite.load",
+    ensure => "link",
+    target => "/etc/apache2/mods-available/rewrite.load",
+    require => Package["apache2"],
+    notify => Service["apache2"]
   }
 }

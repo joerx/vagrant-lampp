@@ -85,33 +85,39 @@ class site ($site_name = "my_site", $docroot = "") {
 
   mysql_grant { "${site_name}@localhost/${site_name}.*":
     require => Class['mysql::server'],
-    user       => "{site_name}@localhost",
-    table      => "{site_name}.*",
+    user       => "${site_name}@localhost",
+    table      => "${site_name}.*",
     privileges => ["ALL"],
     ensure     => "present"
   }
 
   mysql_grant { "${site_name}@%/${site_name}.*":
     require => Class['mysql::server'],
-    user       => "{site_name}@%",
-    table      => "{site_name}.*",
+    user       => "${site_name}@%",
+    table      => "${site_name}.*",
     privileges => ["ALL"],
     ensure     => "present" 
   }
 
   mysql_grant { "${site_name}@localhost/${site_name}_test.*":
     require => Class['mysql::server'],
-    user       => "{site_name}@localhost",
-    table      => "{site_name}_test.*",
+    user       => "${site_name}@localhost",
+    table      => "${site_name}_test.*",
     privileges => ["ALL"],
     ensure     => "present"
   }
 
   mysql_grant { "${site_name}@%/${site_name}_test.*":
     require => Class['mysql::server'],
-    user       => "{site_name}@%",
-    table      => "{site_name}_test.*",
+    user       => "${site_name}@%",
+    table      => "${site_name}_test.*",
     privileges => ["ALL"],
     ensure     => "present"
+  }
+
+  user { "vagrant":
+    ensure => present,
+    groups => ["vagrant", "www-data", "sudo", "admin"],
+    require => Package["apache2"]
   }
 }
