@@ -4,19 +4,23 @@ if size("${site_name}") == 0 { $site_name = "my_site" }
 
 # Set up package repos in init stage
 stage { "init": before  => Stage["main"] }
-class {"apt-mirror": 
+class { "apt-mirror": 
   stage => init, 
   apt_mirror => $apt_mirror 
 }
 
-# LAMPP Stack - Apache2, MySQL, PHP
-class {"lampp":}
+# LAMPP Stack - Apache2, PHP, Skip MySQL (faster)
+class { "lampp": 
+  mysql => false
+}
+
+class { "sqlite": }
 
 # Development tools - Vim, Git, Bash prompt and PHP Development tools (Composer, CLI)
-class {"devel":}
-class {"devel::php":}
+class { "devel": }
+class { "php::composer": }
 
 # Site config - Apache vhost, MySQL database
-class {"site": 
+class { "site": 
   site_name => $site_name
 }

@@ -59,60 +59,63 @@ class site ($site_name = "my_site", $docroot = "") {
     unless  => "test -h /etc/apache2/sites-enabled/${site_name}"
   }
 
-  mysql_database { 'default-db':
-    require => Class['mysql::server'],
-    name => $site_name,
-    ensure => present,
-  }
+  if (defined(Class["mysql::server"])) {
 
-  mysql_database { 'test-db':
-    require => Class['mysql::server'], 
-    name => "${site_name}_test",
-    ensure => present,
-  }
+    mysql_database { 'default-db':
+      require => Class['mysql::server'],
+      name => $site_name,
+      ensure => present,
+    }
 
-  mysql_user { 'default-dbuser@localhost':
-    require => Class['mysql::server'],
-    name => "${site_name}@localhost",
-    password_hash => mysql_password($site_name)
-  }
+    mysql_database { 'test-db':
+      require => Class['mysql::server'], 
+      name => "${site_name}_test",
+      ensure => present,
+    }
 
-  mysql_user { 'default-dbuser@%':
-    require => Class['mysql::server'],
-    name => "${site_name}@%",
-    password_hash => mysql_password($site_name)
-  }
+    mysql_user { 'default-dbuser@localhost':
+      require => Class['mysql::server'],
+      name => "${site_name}@localhost",
+      password_hash => mysql_password($site_name)
+    }
 
-  mysql_grant { "${site_name}@localhost/${site_name}.*":
-    require => Class['mysql::server'],
-    user       => "${site_name}@localhost",
-    table      => "${site_name}.*",
-    privileges => ["ALL"],
-    ensure     => "present"
-  }
+    mysql_user { 'default-dbuser@%':
+      require => Class['mysql::server'],
+      name => "${site_name}@%",
+      password_hash => mysql_password($site_name)
+    }
 
-  mysql_grant { "${site_name}@%/${site_name}.*":
-    require => Class['mysql::server'],
-    user       => "${site_name}@%",
-    table      => "${site_name}.*",
-    privileges => ["ALL"],
-    ensure     => "present" 
-  }
+    mysql_grant { "${site_name}@localhost/${site_name}.*":
+      require => Class['mysql::server'],
+      user       => "${site_name}@localhost",
+      table      => "${site_name}.*",
+      privileges => ["ALL"],
+      ensure     => "present"
+    }
 
-  mysql_grant { "${site_name}@localhost/${site_name}_test.*":
-    require => Class['mysql::server'],
-    user       => "${site_name}@localhost",
-    table      => "${site_name}_test.*",
-    privileges => ["ALL"],
-    ensure     => "present"
-  }
+    mysql_grant { "${site_name}@%/${site_name}.*":
+      require => Class['mysql::server'],
+      user       => "${site_name}@%",
+      table      => "${site_name}.*",
+      privileges => ["ALL"],
+      ensure     => "present" 
+    }
 
-  mysql_grant { "${site_name}@%/${site_name}_test.*":
-    require => Class['mysql::server'],
-    user       => "${site_name}@%",
-    table      => "${site_name}_test.*",
-    privileges => ["ALL"],
-    ensure     => "present"
+    mysql_grant { "${site_name}@localhost/${site_name}_test.*":
+      require => Class['mysql::server'],
+      user       => "${site_name}@localhost",
+      table      => "${site_name}_test.*",
+      privileges => ["ALL"],
+      ensure     => "present"
+    }
+
+    mysql_grant { "${site_name}@%/${site_name}_test.*":
+      require => Class['mysql::server'],
+      user       => "${site_name}@%",
+      table      => "${site_name}_test.*",
+      privileges => ["ALL"],
+      ensure     => "present"
+    }
   }
 
   user { "vagrant":
