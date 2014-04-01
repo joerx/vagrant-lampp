@@ -10,8 +10,12 @@ SITE_NAME = ENV["V_SITE_NAME"] || File.basename(File.expand_path("../..",__FILE_
 # Apt mirror to use by the box, defaults to 'archive.ubuntu.com', change to one closer to your location if needed
 APT_MIRROR = ENV["V_APT_MIRROR"] || "archive.ubuntu.com"
 
-puts "SITE_NAME: #{SITE_NAME}"
-puts "APT_MIRROR: #{APT_MIRROR}"
+# Automatically upgrade virtual box guest additions if vbguest plugin is installed or not
+VBGUEST_AUTO = ENV["V_VBGUEST_AUTO"] || "1"
+
+puts "V_SITE_NAME: #{SITE_NAME}"
+puts "V_APT_MIRROR: #{APT_MIRROR}"
+puts "V_VBGUEST_AUTO: #{VBGUEST_AUTO}"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -54,4 +58,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       :apt_mirror => APT_MIRROR
     }
   end
+
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    unless VBGUEST_AUTO == "1"
+      config.vbguest.auto_update = false
+    else
+      puts "Skipping vbguest auto update"
+    end
+  else
+    puts "Installing vagrant-vbguest plugin is highly recommended!"
+  end
+
+
 end

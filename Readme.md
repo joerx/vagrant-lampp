@@ -7,12 +7,12 @@ a couple of tools needed for PHP development.
 For convenience, Puppet configures the default VHost for Apache2 to point to 
 the project root directory and creates a MySQL database.
 
-The box is using Ubuntu 12.04 Server (Precise) 32bit as base box.
+The box is using Ubuntu 12.04 Server (Precise) x64 as base box.
 
 Preconditions
 -------------
 
- * Vagrant 1.2.7 (Not tested on different version)
+ * Vagrant (Tested on different version 1.2.7, 1.5.1)
  * VirtualBox 
 
 Usage
@@ -48,6 +48,9 @@ variables before booting or provisioning the box:
    name of the parent folder is used
  * V_APT_MIRROR: allows to use an alternative apt-mirror for performance 
    improvements. Defaults to 'archive.ubuntu.com'.
+ * V_VBGUEST_AUTO: If (vagrant-vbguest)[https://github.com/dotless-de/vagrant-vbguest]
+   is installed, it will automatically update VirtualBox guest additions inside
+   the box. Set this to "0" to disable this (useful for testing).
 
 Project Assumptions
 -------------------
@@ -77,6 +80,11 @@ Based on this, the following configuration will be applied:
  * Folder '/var/www/my_project' as document root for Apache2
  * A MySQL database 'my_project', user 'my_project', pass 'my_project'
 
+Recommended Plugins
+-------------------
+ * Use (vagrant-vbguest)[https://github.com/dotless-de/vagrant-vbguest] to make
+   sure guest additions in the box match current VirtualBox version
+
 Limitations
 -----------
 
@@ -89,7 +97,3 @@ License
 -------
 
 Copyright 2013 Jörg Henning &lt;henning.joerg@gmail.com&gt;
-
-Licensed under the BSD License. (the "License"); you may not use this file 
-except in compliance with the License. See the LICENSE file for details.
-
