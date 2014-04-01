@@ -61,9 +61,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   if Vagrant.has_plugin?("vagrant-vbguest")
     unless VBGUEST_AUTO == "1"
-      config.vbguest.auto_update = false
-    else
       puts "Skipping vbguest auto update"
+      config.vbguest.auto_update = false
     end
   else
     puts "Installing vagrant-vbguest plugin is highly recommended!"
