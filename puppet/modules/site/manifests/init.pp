@@ -39,7 +39,7 @@ class site ($site_name = "my_site", $docroot = "") {
 
   file { "site-conf":
     require => Package["apache2"],
-    path    => "/etc/apache2/sites-available/${site_name}",
+    path    => "/etc/apache2/sites-available/${site_name}.conf",
     content => template("site/site.conf.erb"),
     ensure  => file,
     owner   => "root",
@@ -52,11 +52,11 @@ class site ($site_name = "my_site", $docroot = "") {
   }
 
   exec { "enable-site":
-    command => "a2dissite default && a2ensite ${site_name}",
+    command => "a2dissite 000-default && a2ensite ${site_name}",
     require => [File["site-root"], File["site-conf"]],
     path    => ["/usr/bin", "/usr/sbin"],
     notify  => Service["apache2"],
-    unless  => "test -h /etc/apache2/sites-enabled/${site_name}"
+    unless  => "test -h /etc/apache2/sites-enabled/${site_name}.conf"
   }
 
   if (defined(Class["mysql::server"])) {

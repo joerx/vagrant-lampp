@@ -41,16 +41,16 @@
 #   }
 #
 class apt-mirror ($apt_mirror = "archive.ubuntu.com") {
-  file { "sources.list":
+  file { "apt/sources.list":
     path    => "/etc/apt/sources.list",
     ensure  => "present",
     content => template("apt-mirror/sources.list.erb"),
-    notify  => Exec["apt-update"],
+    notify  => Exec["apt/apt-update"],
     owner   => "root",
     group   => "root"
   }
 
-  exec { "apt-update":
+  exec { "apt/apt-update":
     command => "/usr/bin/apt-get update",
     returns => [0, 100],
     refreshonly => true

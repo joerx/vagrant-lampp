@@ -1,5 +1,11 @@
-class lampp ($mysql = "true") {
+class lampp ($mysql = "true", $ppa = "false") {
 
+  # This will load the PPA if $ppa is true, otherwise we use default repos
+  class {"lampp::ppa":
+    ppa => "$ppa"
+  }
+
+  # Only install MySQL if required
   if "${mysql}" == "true" {
     class {"mysql::server": 
       root_password    => "root", 
@@ -7,6 +13,11 @@ class lampp ($mysql = "true") {
     }
   }
   
-  class {"httpd":}
-  class {"php":} 
+  class {"apache2":
+    require => Class["lampp::ppa"]
+  }
+  
+  class {"php":
+    require => Class["lampp::ppa"]
+  } 
 }
