@@ -35,6 +35,11 @@ class php {
     notify => Service["apache2"]
   }
 
+  package { "php5-mcrypt": 
+    ensure => latest,
+    notify => Service["apache2"]
+  }
+
   if defined(Class["mysql::server"]) {
     class {"php::mysql":}
   }
