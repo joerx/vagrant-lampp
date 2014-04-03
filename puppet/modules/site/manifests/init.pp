@@ -43,7 +43,8 @@ class site ($site_name = "my_site", $docroot = "") {
     content => template("site/site.conf.erb"),
     ensure  => file,
     owner   => "root",
-    group   => "root"
+    group   => "root",
+    notify  => Service["apache2"]
   }
 
   file { "site-root":
