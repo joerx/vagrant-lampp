@@ -20,6 +20,9 @@ class { "sqlite": }
 # Development tools - Vim, Git, Bash prompt, ...
 class { "devel": }
 
+# NodeJS and some useful packages
+class { "node-dev": }
+
 # Composer
 class { "php::composer": }
 
