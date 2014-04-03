@@ -25,5 +25,6 @@ class { "php::composer": }
 
 # Site config - Apache vhost, MySQL database
 class { "site": 
-  site_name => $site_name
+  site_name => $site_name,
+  docroot => "/var/www/${site_name}/app"
 }

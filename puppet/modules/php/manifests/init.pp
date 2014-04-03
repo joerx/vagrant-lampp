@@ -44,5 +44,9 @@ class php {
     class {"php::mysql":}
   }
 
+  if defined(Class["sqlite"]) {
+    class {"php::sqlite":}
+  }
+
   class { "php::cli": }
 }
