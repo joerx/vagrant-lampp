@@ -29,7 +29,7 @@
 #     site_name => $site_name
 #   }
 # 
-class site ($site_name = "my_site", $docroot = "") {
+class site ($site_name = "my_site", $docroot = "", $port = "8080") {
 
   if size("${docroot}") == 0 { 
     $document_root = "/var/www/${site_name}" 
@@ -45,6 +45,15 @@ class site ($site_name = "my_site", $docroot = "") {
     owner   => "root",
     group   => "root",
     notify  => Service["apache2"]
+  }
+
+  if "${port}" != "80" {
+    file_line { "Listen ${port}":
+      require => Package["apache2"],
+      ensure  => present,
+      line    => "Listen ${port}",
+      path    => "/etc/apache2/ports.conf"
+    }
   }
 
   file { "site-root":
