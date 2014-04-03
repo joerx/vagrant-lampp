@@ -11,7 +11,7 @@ class node-dev {
     require => Apt::Ppa['ppa:chris-lea/node.js']
   }
 
-  package {['jasmine-node', 'nodemon']:
+  package {['nodemon']:
     provider => 'npm',
     require => Package['nodejs']
   }
