@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # If the vagrant project was unpacked inside the web project root, the parent folder contains the site root
   config.vm.synced_folder "../", "/var/www/#{SITE_NAME}", 
-    owner: "www-data", 
+    owner: "vagrant", 
     group: "www-data", 
     mount_options: ["umask=0002","dmask=0002","fmask=0002"]
 

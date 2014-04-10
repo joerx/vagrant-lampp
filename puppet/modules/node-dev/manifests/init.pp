@@ -11,7 +11,7 @@ class node-dev {
     require => Apt::Ppa['ppa:chris-lea/node.js']
   }
 
-  package {['nodemon']:
+  package {['nodemon', 'grunt-cli']:
     provider => 'npm',
     require => Package['nodejs']
   }
