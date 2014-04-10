@@ -40,6 +40,10 @@ class php {
     notify => Service["apache2"]
   }
 
+  class { "php::xdebug": }
+
+  class { "php::cli": }
+
   if defined(Class["mysql::server"]) {
     class {"php::mysql":}
   }
@@ -47,6 +51,4 @@ class php {
   if defined(Class["sqlite"]) {
     class {"php::sqlite":}
   }
-
-  class { "php::cli": }
 }
