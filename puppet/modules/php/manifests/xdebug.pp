@@ -1,6 +1,7 @@
 class php::xdebug {
   package { "php5-xdebug": 
     ensure => latest,
+    require => Package["php5"]
   }
 
   file { "xdebug.ini":
