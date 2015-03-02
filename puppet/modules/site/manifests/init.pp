@@ -29,7 +29,7 @@
 #     site_name => $site_name
 #   }
 # 
-class site ($site_name = "my_site", $docroot = "", $port = "8080") {
+class site ($site_name = "my_site", $docroot = "", $port = "80") {
 
   if size("${docroot}") == 0 { 
     $document_root = "/var/www/${site_name}" 

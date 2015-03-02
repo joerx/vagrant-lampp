@@ -9,8 +9,7 @@
     <Directory <%= @document_root %>>
         Options Indexes FollowSymLinks MultiViews
         AllowOverride All
-        Order allow,deny
-        allow from all
+        Require all granted
     </Directory>
 
     ErrorLog ${APACHE_LOG_DIR}/<%= @site_name %>-error.log

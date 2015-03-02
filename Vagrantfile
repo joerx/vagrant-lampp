@@ -23,8 +23,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
   # Forward httpd and mysql
-  config.vm.network :forwarded_port, guest: 8080, host: 8080
-  config.vm.network :forwarded_port, guest: 3306, host: 3306
+  config.vm.network :forwarded_port, guest: 80, host: 8080
+  # config.vm.network :forwarded_port, guest: 3306, host: 3306
 
   # Sometimes good to have the box in a specific IP
   # config.vm.network :private_network, ip: "192.168.33.10"
@@ -58,8 +58,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puts "Skipping vbguest auto update"
       config.vbguest.auto_update = false
     end
-  else
-    puts "Installing vagrant-vbguest plugin is highly recommended!"
   end
 
 end
