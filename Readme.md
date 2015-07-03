@@ -1,5 +1,4 @@
-Vagrant LAMPP
-=============
+# Vagrant LAMPP
 
 Vagrant box with Puppet Standalone provisioner. Install Apache2, MySQL, PHP and 
 a couple of tools needed for PHP development.
@@ -9,14 +8,12 @@ the project root directory and creates a MySQL database.
 
 The box is using Ubuntu 12.04 Server (Precise) x64 as base box.
 
-Preconditions
--------------
+## Preconditions
 
  * Vagrant (Tested on different version 1.2.7, 1.5.1)
  * VirtualBox 
 
-Usage
------
+## Usage
 
 ### Adding To A Project
 
@@ -44,20 +41,19 @@ directly below the project root of your web application (see below why).
 
 Some customization of the Vagrant box can be achieved by setting environment 
 variables before booting or provisioning the box:
- * V_SITE_NAME: override the site name to be used (see below), otherwise the 
+ * `V_SITE_NAME`: override the site name to be used (see below), otherwise the 
    name of the parent folder is used
- * V_APT_MIRROR: allows to use an alternative apt-mirror for performance 
+ * `V_APT_MIRROR`: allows to use an alternative apt-mirror for performance 
    improvements. Defaults to 'archive.ubuntu.com'.
- * V_VBGUEST_AUTO: If (vagrant-vbguest)[https://github.com/dotless-de/vagrant-vbguest]
+ * `V_VBGUEST_AUTO`: If (vagrant-vbguest)[https://github.com/dotless-de/vagrant-vbguest]
    is installed, it will automatically update VirtualBox guest additions inside
    the box. Set this to "0" to disable this (useful for testing).
 
-Project Assumptions
--------------------
+## Project Assumptions
 
 The box will set up the document root for the web servers default vhost and a 
 MySQL database for the project automatically. It will do this based on an 
-internal variable SITE_NAME. The SITE_NAME will be the base name of the parent 
+internal variable `SITE_NAME`. The `SITE_NAME` will be the base name of the parent 
 of the folder the Vagrant file is located in. This can be overridden using the 
 environment variable V_SITE_NAME.
 
@@ -80,20 +76,20 @@ Based on this, the following configuration will be applied:
  * Folder '/var/www/my_project' as document root for Apache2
  * A MySQL database 'my_project', user 'my_project', pass 'my_project'
 
-Recommended Plugins
--------------------
- * Use (vagrant-vbguest)[https://github.com/dotless-de/vagrant-vbguest] to make
+## Recommended Plugins
+
+ * Use [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) to make
    sure guest additions in the box match current VirtualBox version
 
-Limitations
------------
+## Limitations
 
  * Cannot push to Git from inside the box as public SSL key is missing. 
    Branch, commit, etc. works though. Copy the SSH-public/private key pair 
    your are using on Github to /home/vagrant/.ssh if you want to push from 
    inside the box 
 
-License
--------
+## License
+
+See LICENSE.
 
 Copyright 2013 Jörg Henning &lt;henning.joerg@gmail.com&gt;
